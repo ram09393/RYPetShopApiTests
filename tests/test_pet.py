@@ -23,8 +23,7 @@ class TestPet:
             assert response.text == "Pet not found", "Текст ошибки не совпал с ожидаемым"
 
 
-@allure.feature("Pet")
-class TestPet:
+
     @allure.title("Попытка получить информацию о несуществующем питомце")
     def test_get_nonexistent_pet(self):
         with allure.step("Отправка запроса на получение информации несуществующего питомце"):
