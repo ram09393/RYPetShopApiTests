@@ -101,6 +101,10 @@ class TestPet:
             pet_id = create_pet["id"]
         with allure.step("Отправка запроса на получение информации о питомце по ID"):
             response = requests.get(f"{BASE_URL}/pet/{pet_id}")
+        with allure.step("Проверка статуса ответа"):
+            assert response.status_code == 200
+        response_get_id = response.json()
+        assert response_get_id["id"] == pet_id
 
     @allure.title("Обновление информации о питомце")
     def test_update_pet(self, create_pet):
@@ -114,8 +118,7 @@ class TestPet:
                 "status": "sold"
             }
 
-            key_name = "id"
-            pet_id = create_pet[key_name]
+            pet_id = create_pet["id"]
 
         with allure.step("Отправка PUT-запроса с подготовленными данными о питомце"):
             response = requests.put(url=f"{BASE_URL}/pet", json=updated_payload)
