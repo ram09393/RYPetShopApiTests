@@ -103,9 +103,9 @@ class TestPet:
             response = requests.get(f"{BASE_URL}/pet/{pet_id}")
 
     @allure.title("Обновление информации о питомце")
-    def test_update_pet(create_pet):
+    def test_update_pet(self, create_pet):
         with allure.step("Получение ID созданного питомца"):
-            pet_id = create_pet["id"]
+            pet_id = create_pet[id]
 
         with allure.step("Подготовка данных для обновления питомца"):
             updated_payload = {
@@ -127,9 +127,9 @@ class TestPet:
             assert updated_pet["status"] == "sold"
 
     @allure.title("Удаление питомца по ID")
-    def test_delete_pet(create_pet):
+    def test_delete_pet(self, create_pet):
         with allure.step("Получение ID созданного питомца"):
-            pet_id = create_pet["id"]
+            pet_id = create_pet[id]
 
         with allure.step("Отправка DELETE-запроса на удаление питомца"):
             response = requests.delete(url=f"{BASE_URL}/pet/{pet_id}")

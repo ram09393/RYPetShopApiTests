@@ -3,6 +3,7 @@ import requests
 
 BASE_URL = "http://5.181.109.28:9090/api/v3"
 
+
 @pytest.fixture(scope="function")
 def create_pet():
     """Фикстура для создания питомца."""
