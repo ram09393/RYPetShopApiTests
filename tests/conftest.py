@@ -35,9 +35,7 @@ def create_order():
     return response.json()
 
 
-@pytest.fixture(scope="function")
 def get_inventory():
-    """Фикстура для получения инвентаря магазина."""
     response = requests.get(url=f"{BASE_URL}/store/inventory")
     assert response.status_code == 200
     return response.json()
