@@ -40,7 +40,8 @@ class TestStore:
 
     @allure.title("Получение информации о заказе по ID")
     def test_get_order_by_id(self, create_order):
-        order_id = 1
+        with allure.step("Получение ID заказа с id = 1"):
+            order_id = create_order["id"]
         with allure.step("Отправка запроса на получение информации о заказе по ID"):
             response = requests.get(f"{BASE_URL}/store/order/{order_id}")
         with allure.step("Проверка статуса ответа"):
