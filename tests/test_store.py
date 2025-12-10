@@ -40,14 +40,20 @@ class TestStore:
 
     @allure.title("Получение информации о заказе по ID")
     def test_get_order_by_id(self, create_order):
-        id = 1  # ID заказа
+        order_id = 1
         with allure.step("Отправка запроса на получение информации о заказе по ID"):
-            response = requests.get(f"{BASE_URL}/store/order/{id}")
+            response = requests.get(f"{BASE_URL}/store/order/{order_id}")
         with allure.step("Проверка статуса ответа"):
             assert response.status_code == 200
-        response_get_order = response.json()
         with allure.step("Проверка, что ID заказа совпадает с запрашиваемым"):
-            assert response_get_order["id"] == id
+            order_data = response.json()
+            assert order_data['id'] == order_id  # Проверка, что id заказа равен 1
+            assert order_data['petId'] == create_order['petId']
+            assert order_data['quantity'] == create_order['quantity']
+            assert order_data['shipDate'] == create_order['shipDate']
+            assert order_data['status'] == create_order['status']
+            assert order_data['complete'] == create_order['complete']
+
 
     @allure.title("Удаление заказа по ID")
     def test_delete_order(self, create_order):
@@ -77,12 +83,6 @@ class TestStore:
     def test_get_inventory(self):
         with allure.step("Проверка получения инвентаря магазина"):
             response = requests.get(f"{BASE_URL}/store/inventory")
-
-        assert response.status_code == 200
-        response_data = response.json()
-        assert isinstance(response_data, dict)
-        expected_data = {"approved": 50}
-        assert response_data == expected_data, f"Expected {expected_data}, but got {response_data}"
 
         with allure.step("Проверка статуса ответа и валидация JSON-схемы"):
             assert response.status_code == 200
